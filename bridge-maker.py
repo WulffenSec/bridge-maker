@@ -32,21 +32,26 @@ else:
     print()
     print("No command 'virsh' found.")
 
-
-# Making sure the user is ok not installing Virt-Manager part of the script
-choice = None
-if found != 3:
+# Main function
+def y_n(question,answer,fail):
+    choice = None
     while choice == None:
-        print('Virt-Manager part of the script will not work, are you sure you want to continue?')
+        print(question)
         choice = input('(y/N): ')
         if choice == 'y' or choice == 'Y' or choice == 'yes' or choice == 'Yes':
-            print('Ok, ommiting Virt-Manager script') 
+            print(answer)
         elif choice == '' or choice == 'n' or choice == 'N' or choice == 'no' or choice == 'No':
-            print('Canceling')
+            print(fail)
             quit()
         else:
             print('Invalid option selected. Exiting')
+            quit()
 
+# Making sure the user is ok not installing Virt-Manager part of the script
+if found != 3:
+    y_n('Virt-Manager part of the script will not work, are you sure you want to continue?',
+            'Ok, ommiting Virt-Manager script',
+            'Canceling')
 print()
 
 # Generates a file with all the interfaces.
@@ -74,13 +79,12 @@ for n in network_cards:
 
 while choice == None:
     choice = input('Select the correct number of the interface you want to make bridge: ')
-
-try:
-    choice = int(choice)
-except:
-    print('Invalid character, only numbers. Exiting')
-    quit()
-
+    try:
+        choice = int(choice)
+    except:
+        print('Invalid character, only numbers. Exiting')
+        quit()
+       
 choice = choice - 1
 
 try:
@@ -88,23 +92,14 @@ try:
 except:
     print('Invalid number selected. Exiting')
     quit()
+print()
 
 # Making sure the interface is the correct one before going.
-choice = None
-
-while choice == None:
-    print('Are you sure the right interface is',correct_interface,'?')
-    choice = input('(y/N): ')
-
-if choice == 'y' or choice == 'Y' or choice == 'yes' or choice == 'Yes':
-    print('Ok, starting nmcli work')
-elif choice == '' or choice == 'n' or choice == 'N' or choice == 'no' or choice == 'No':
-    print('Canceling')
-    quit()
-else:
-    print('Invalid option selected. Exiting')
-    quit()
-
+print('Interface selected:',correct_interface)
+y_n('Are you sure thats the right interface?',
+        'Ok, starting nmcli work',
+        'Canceling')
+print()
 # Checking nmcli name.
 cmd = 'nmcli con show --active | grep ' + correct_interface + ' > nm_name.txt'
 os.system(cmd)
@@ -132,18 +127,9 @@ if found != 3:
     quit()
 
 # Ask about adding br0 to virsh
-choice = None
-while choice == None:
-    print('Do you want to add br0 to Virt-Manager network as default?')
-    choice = input('(y/N): ')
-
-if choice == 'y' or choice == 'Y' or choice == 'yes' or choice == 'Yes':
-    print('Ok, adding br0 to Virt-Manager!')
-elif choice == '' or choice == 'n' or choice == 'N' or choice == 'no' or choice == 'No':
-    print('Script done!\nHave a nice day')
-    quit()
-else:
-    print('Invalid option selected. Exiting')
+y_n('Do you want to add br0 to Virt-Manager network as default?',
+        'Ok, adding br0 to Virt-Manager!',
+        'Script done!\nHave a nice day')
 
 # Virsh work
 print()
