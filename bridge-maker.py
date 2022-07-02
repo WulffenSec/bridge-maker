@@ -81,7 +81,7 @@ while choice == None:
     choice = input('Select the correct number of the interface you want to make bridge: ')
     try:
         choice = int(choice)
-    except:
+    except ValueError:
         print('Invalid character, only numbers. Exiting')
         quit()
        
@@ -89,7 +89,7 @@ choice = choice - 1
 
 try:
     correct_interface = network_cards[choice]
-except:
+except Exception:
     print('Invalid number selected. Exiting')
     quit()
 print()
