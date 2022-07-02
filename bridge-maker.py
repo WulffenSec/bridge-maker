@@ -56,16 +56,16 @@ print()
 
 # Generates a file with all the interfaces.
 os.system('ip link > network.txt')
-network_cards_raw = open('./network.txt','r')
+with open('./network.txt','r') as f:
+    network_cards_raw = f.read()
 
 # Parse the finds for later use.
 network_cards = list()
 
-for card in network_cards_raw:
-    if re.findall('[0-9]: [0-9,a-z]+:',card):
-        interface = re.findall('[0-9]: ([0-9,a-z]+):',card)
-        for item in interface:
-            network_cards.append(item)
+if re.findall('[0-9]: [0-9,a-z]+:',network_cards_raw):
+    interface = re.findall('[0-9]: ([0-9,a-z]+):',network_cards_raw)
+    for item in interface:
+        network_cards.append(item)
 
 # Selecting the right interface to do the bridge.
 choice = None
@@ -100,13 +100,14 @@ y_n('Are you sure thats the right interface?',
         'Ok, starting nmcli work',
         'Canceling')
 print()
+
 # Checking nmcli name.
 cmd = 'nmcli con show --active | grep ' + correct_interface + ' > nm_name.txt'
 os.system(cmd)
-nm_name_raw = open('./nm_name.txt','r')
-for n in nm_name_raw:
-    n = n.split('  ')
-    nm_name = n[0]
+with open('./nm_name.txt','r') as f:
+    nm_name_raw = f.read()
+nm_name = nm_name_raw.split('  ')
+nm_name = nm_name[0]
 
 # Starts the nmcli work.
 print()
