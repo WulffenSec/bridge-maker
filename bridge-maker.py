@@ -3,7 +3,7 @@
 #  Automatic bridge maker   #
 #############################
 # Author: Marcos Dos Santos #
-# Github: dotvectortech     #
+# Github: WulffenSec        #
 #############################
 
 # Imports.
