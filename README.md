@@ -16,7 +16,7 @@
 
 #### In your terminal
 ```
-git clone https://www.github.com/dotvectortech/bridge-maker.git
+git clone https://www.github.com/WulffenSec/bridge-maker.git
 cd bridge-maker
 python bridge-maker.py
 ```
