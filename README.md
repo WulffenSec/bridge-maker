@@ -1,5 +1,7 @@
 # BRIDGE MAKER
 
+# NEEDS RE-DO, ARCHIVING...
+
 ## What is it?
 > It's a simple script to automate the creation of a bridge for your network using NetworkManager, instead of using the default interface.
 
